@@ -139,4 +139,4 @@ This mapping is all it takes to render that component we defined.  Here's what w
 
 Note that we didn't replace the outer tag; instead, we just inserted the component *into* it.
 
-To see the full source, check out "example" in the root folder and read the section [Real-World Example](https://github.com/elauffenburger/ko-dynamic-components#Real-World Example)
+To see the full source, check out "example" in the root folder and read the section [Real-World Example](https://github.com/elauffenburger/ko-dynamic-components#real-world-example)
