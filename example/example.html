@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script type="text/javascript" src="config.js"></script>
+		<script type="text/javascript" src="libs/require.js" data-main="example.js"></script>
+		<style>
+			.button {
+				margin-top: .8em;
+				border: 1px solid black;
+				width: 10.7em;
+				display: block;	
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div data-bind="foreach: components">
+			<div data-bind="dynamicComponent: $data"></div>
+		</div>
+		
+		<h3>Manual entry for components()[0]</h3>
+		<input type="text" data-bind="value: $root.components()[0].Name, valueUpdate: 'keyup'"></input>
+		<br />
+		
+		<h3>Manual entry for components()[1]</h3>
+		<input type="text" data-bind="value: $root.components()[1].Status, valueUpdate: 'keyup'"></input>
+		<br />
+	</body>
+</html>

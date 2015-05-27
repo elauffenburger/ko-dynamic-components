@@ -1,0 +1,35 @@
+{
+  "name": "ko-dynamic-components",
+  "version": "1.0.0",
+  "description": "Dynamically renders components",
+  "main": "gulpfile.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp": "^3.8.11",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elauffenburger/ko-dynamic-components"
+  },
+  "keywords": [
+    "knockout",
+    "components",
+    "component",
+    "dynamic"
+  ],
+  "author": "Eric Lauffenburger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elauffenburger/ko-dynamic-components/issues"
+  },
+  "homepage": "https://github.com/elauffenburger/ko-dynamic-components"
+}
