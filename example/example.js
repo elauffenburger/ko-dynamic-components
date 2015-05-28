@@ -46,6 +46,26 @@ define(
 			template: '<h1>Status:</h1><input type="text" data-bind="value: status(), valueUpdate: \'keyup\'"><div class="button" data-bind="event: { click: logSelf }">Log me in console!</div>'
 		});
 
+		ko.components.register('custom_component_override', {
+			viewModel: function (params) {
+				var self = this;
+
+				// Data
+				self.message = ko.observable(params.message);
+				
+				// Functions
+				self.logSelf = logSelf;
+				
+				//////////
+				function logSelf() {
+					console.log("Hi! I'm: %O", self);
+					console.log("Here's my value raw: %O", self.message());
+					console.log("Here's my value unwrapped: %s", dynamicComponents.unwrapObservable(self.message));
+				}
+			},
+			template: '<h1>Overriden Generic Type:</h1><input type="text" data-bind="value: message(), valueUpdate: \'keyup\'"><div class="button" data-bind="event: { click: logSelf }">Log me in console!</div>'
+		});
+
 		// Create our viewmodel
 		function ViewModel() {
 			var self = this;
@@ -58,6 +78,11 @@ define(
 				{
 					ComponentTypeId: ko.observable(2),
 					Status: ko.observable("Ready for action!")
+				},
+				{
+					ComponentTypeId: ko.observable(1),
+					ComponentId: ko.observable(1),
+					Message: ko.observable("I'm special!")
 				}
 			]);
 		}
@@ -66,11 +91,12 @@ define(
 		dynamicComponents.config({
 			debug: true,
 			elementPrefix: "custom_component_",
-			getIdFunction: "ComponentTypeId"
+			getTypeIdFunction: "ComponentTypeId",
+			getIdFunction: "ComponentId"
 		});
 
 		// Register component settings
-		dynamicComponents.registerComponents([
+		dynamicComponents.registerComponentTypes([
 			{
 				id: 1,
 				name: "textbox",
@@ -88,6 +114,18 @@ define(
 				literal: false
 			}
 		]);
+		
+		// Register specific components
+		// ko-dynamic-components will always render a component by ID
+		// before it renders it by the type ID.
+		dynamicComponents.registerComponentById({
+			id: 1,
+			name: "override",
+			params: {
+				message: 'Message'	
+			},
+			literal: false
+		});
 
 		dynamicComponents.run();
 

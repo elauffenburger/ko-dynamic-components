@@ -3,7 +3,18 @@ Registers knockout components and dynamically inserts/binds them
 
 ## What is this?
 
-ko-dynamic-components is an AMD module that allows you to register Knockout.js components that you'd like to load dynamically.  It provides a handler you can include in your markup to load components as child elements.  This is especially useful in scenarios where you are trying to render components whose configuration is stored in the database.
+ko-dynamic-components is an AMD module (and requirejs loader plugin) that allows you to register Knockout.js components that you'd like to load dynamically.  It provides a handler you can include in your markup to load components as child elements.  This is especially useful in scenarios where you are trying to render components whose configuration is stored in the database.
+
+## Build
+
+Make sure you've installed node, then run
+
+```console
+	npm install
+	gulp
+```
+
+This will generate debug and minified versions of ko-dynamic-components under "/dist"
 
 ## Setting up your environment
 
@@ -104,18 +115,18 @@ First, we'll have to configure dynamic-components:
 	dynamicComponents.config({
     	debug: true, // useful for getting error messages
      	elementPrefix: "custom_component_", // used as a prefix for our components we target
-        getIdFunction: "ComponentTypeId" // name of the function in our viewmodel's component(s) that returns component type ids (this will make more sense in a second)
+        getTypeIdFunction: "ComponentTypeId" // name of the function in our viewmodel's component(s) that returns component type ids (this will make more sense in a second)
     });
 ```
 
 Now we can register our component mappings in dynamic-components.  You might have some questions about what those parameters mean; here's a quick overview:
 * **debug**: If we want ko-dynamic-components to report debug information
 * **elementPrefix**: The prefix of all knockout components we will target.  For example, we're about to register a component that we want to be rendered as a "custom_component_textbox" (the component we previously registered with knockout).  We can do this by setting the global prefix of dynamic-components to "custom_component\_" and (later), the **name** of the component registered in dynamic-components to "textbox", thereby naming the component **"custom_component_textbox"** (the concatentation of the two)
-* **getIdFunction**: The function we can use to get the id of the component ***type*** for a given component registration.
+* **getTypeIdFunction**: The function we can use to get the id of the component ***type*** for a given component registration.
 
 Now, let's register our component mappings in dynamic-components:
 ```js
-	dynamicComponents.registerComponent(1, "textbox", {
+	dynamicComponents.registerComponentType(1, "textbox", {
     	name: "Name"
     }, false);
 ```
@@ -156,8 +167,6 @@ To see the full source, check out "example" in the root folder and read the sect
 
 dynamic-components has a few configuration options (most of which are explored above), but some exist *outside* of the normal dynamicComponents.config(...) method -- these are set via require.config(...).
 
-This will map all requests in your application for ko-dynamic-components to the loader version of the module, which will support requirejs config options.  The only reason you wouldn't want to use this version is if you aren't going to take advantage of those configuration options and don't feel comfortable with more complicated requirejs configuration.
-
 **require.js options**
 ```js
 	// Assuming module loaded as "ko-dynamic-components"
@@ -189,3 +198,39 @@ This will map all requests in your application for ko-dynamic-components to the 
         handlerName: "dynamicComponent" 
     });
 ```
+
+## Last Notes
+
+### Observable Convention
+ko-dynamic-components should be observables, *not* the value of an observable.  That means that if you
+make a binding that looks like this...
+
+```js
+	// DON'T DO THIS!
+	dynamicComponents.registerComponentType({
+		id: 1,
+		name: "my-control",
+		params: {
+			name: "Name()",
+			value: "Value()"
+		},
+		literal: false	
+	});
+```
+
+...instead of this...
+
+```js
+	// DO THIS!
+	dynamicComponents.registerComponentType({
+		id: 1,
+		name: "my-control",
+		params: {
+			name: "Name",
+			value: "Value"	
+		},
+		literal: false
+	});
+```
+
+...you'll probably get unintended behavior.

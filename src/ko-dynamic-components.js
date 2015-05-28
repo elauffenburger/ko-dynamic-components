@@ -15,12 +15,14 @@ define({
 		//////////
 		
 		function factory(ko, $) {
-			var renderFunctions = {},
+			var componentTypeRenderFunctions = {},
+				componentRenderFunctions = {},
 				configuration = {
 					elementPrefix: "",
 					initKey: '__component_control_initialized',
 					debug: false,
 					getIdFunction: 'componentId',
+					getTypeIdFunction: 'componentTypeId',
 					handlerName: "dynamicComponent"
 				},
 				logger = {
@@ -31,8 +33,10 @@ define({
 
 			var exports = {
 				render: render,
-				registerComponent: registerComponent,
-				registerComponents: registerComponents,
+				registerComponentType: registerComponentType,
+				registerComponentTypes: registerComponentTypes,
+				registerComponentById: registerComponentById,
+				registerComonentsById: registerComponentsById,
 				config: config,
 				unwrapObservable: unwrapObservable,
 				run: run
@@ -41,6 +45,24 @@ define({
 			return exports;
 
 			//////////
+
+			function registerComponentById(args) {
+				componentRenderFunctions[args.id] = function() {
+					return renderFromTemplate(args.name, args.params, args.literal);	
+				};
+			}
+			
+			function registerComponentsById(components) {
+				for(var i in components) {
+					var args = components[i];
+
+					try {
+						registerComponentType(args.id, args.name, args.params, args.literal);
+					} catch (e) {
+						logger.error("Error registering component: %O", e);
+					}	
+				}
+			}
 
 			function unwrapObservable(obj) {
 				var maxdepth = 10,
@@ -77,22 +99,22 @@ define({
 				}
 			}
 
-			function registerComponents(components) {
+			function registerComponentTypes(components) {
 				for (var i in components) {
 					var args = components[i];
 
 					try {
-						registerComponent(args.id, args.name, args.params, args.literal);
+						registerComponentType(args.id, args.name, args.params, args.literal);
 					} catch (e) {
-						logger.error("Error registering component: %O", e);
+						logger.error("Error registering component type: %O", e);
 					}
 				}
 			}
 
-			function registerComponent(id, name, params, literal) {
-				renderFunctions[id] = function (component) {
+			function registerComponentType(id, name, params, literal) {
+				componentTypeRenderFunctions[id] = function (component) {
 					return renderFromTemplate(name, params, literal);
-				}
+				};
 			}
 
 			function registerKnockoutHandlers() {
@@ -124,9 +146,18 @@ define({
 			}
 
 			function render(component) {
-				var id = component[configuration.getIdFunction]();
-
-				return renderFunctions[id](component);
+				var idFunction = component[configuration.getIdFunction];
+				var typeIdFunction = component[configuration.getTypeIdFunction];
+				
+				if(!idFunction) {
+					if(!typeIdFunction) {
+						logger.error("Couldn't find a component registration for this component: %O", component);	
+					}
+					
+					return componentTypeRenderFunctions[typeIdFunction()](component);
+				}
+				
+				return componentRenderFunctions[idFunction()](component);
 			}
 
 			function renderFromTemplate(name, params, isLiteral) {

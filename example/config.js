@@ -12,7 +12,7 @@ var require = {
 	},
 	config: {
 		"ko-dynamic-components": {
-			useGlobals: true
+			useGlobals: false
 		}	
 	}
 };
