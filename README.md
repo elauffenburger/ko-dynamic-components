@@ -9,6 +9,9 @@ ko-dynamic-components is an AMD module that allows you to register Knockout.js c
 
 You're going to want to make sure your environment is set up to include Knockout as a module named "knockout" and jQuery as a module named "jquery".  Here's a sample of how that ***could*** work.
 
+Something important to note is that ko-dynamic-components is loaded as a *plugin*.  That means that you'll need to add an exclamation mark (!) at the end of the pathname.
+We've mapped all calls for "ko-dynamic-components" to "ko-dynamic-components!" here to fix that problem.
+
 ```javascript
 require.config({
 	paths: {

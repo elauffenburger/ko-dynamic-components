@@ -1,7 +1,9 @@
 define({
 	load: function (name, req, onload, config) {
+		var configuration = config.config["ko-dynamic-components"];
+		
 		// If the user requested browser globals
-		if (config.useGlobals) {
+		if (configuration.useGlobals) {
 			onload(factory(ko, $));
 		} else {
 			// Otherwise load normally
