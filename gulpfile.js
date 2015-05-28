@@ -37,7 +37,10 @@ function optimize(done) {
 			{
 				paths: {
 					"jquery": "../bower_components/jquery/dist/jquery.min",
-					"knockout": "../bower_components/knockout/dist/knockout"
+					"knockout": "../bower_components/knockout/dist/knockout",
+					"kdc-base": "./kdc-base",
+					"kdc-loader": "./kdc-loader",
+					"knockout-dynamic-components": "./knockout-dynamic-components"
 				},
 				optimize: "none"
 			}
