@@ -1,4 +1,4 @@
-define([], function () {
+define("kdc-base", [], function () {
 	 return function(ko, $) {
 		var renderFunctions = {},
 			configuration = {

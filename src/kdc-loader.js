@@ -1,5 +1,5 @@
 // Define a plugin to check for require config options
-define({
+define("kdc-loader", {
 	load: function(name, req, onload, config) {
 		// If the user requested browser globals
 		if (config.useGlobals) {
