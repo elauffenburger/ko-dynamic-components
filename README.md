@@ -3,7 +3,7 @@ Registers knockout components and dynamically inserts/binds them
 
 ## What is this?
 
-knockout-dynamic-components is an AMD module that allows you to register Knockout.js components that you'd like to load dynamically.  It provides a handler you can include in your markup to load components as child elements.  This is especially useful in scenarios where you are trying to render components whose configuration is stored in the database.
+ko-dynamic-components is an AMD module that allows you to register Knockout.js components that you'd like to load dynamically.  It provides a handler you can include in your markup to load components as child elements.  This is especially useful in scenarios where you are trying to render components whose configuration is stored in the database.
 
 ## Setting up your environment
 
@@ -27,7 +27,7 @@ This will ensure that when you request "knockout", it grabs the module from that
             $: "path/to/your/jquery"
         },
         map: {
-			"knockout-dynamic-components" : {
+			"ko-dynamic-components" : {
             	"knockout": "ko",
                 "jquery": "$"
             }
@@ -98,7 +98,7 @@ First, we'll have to configure dynamic-components:
 ```
 
 Now we can register our component mappings in dynamic-components.  You might have some questions about what those parameters mean; here's a quick overview:
-* **debug**: If we want knockout-dynamic-components to report debug information
+* **debug**: If we want ko-dynamic-components to report debug information
 * **elementPrefix**: The prefix of all knockout components we will target.  For example, we're about to register a component that we want to be rendered as a "custom_component_textbox" (the component we previously registered with knockout).  We can do this by setting the global prefix of dynamic-components to "custom_component\_" and (later), the **name** of the component registered in dynamic-components to "textbox", thereby naming the component **"custom_component_textbox"** (the concatentation of the two)
 * **getIdFunction**: The function we can use to get the id of the component ***type*** for a given component registration.
 
@@ -151,32 +151,32 @@ This is only necessary if you want configuration options.  **You must include th
 ```js
 	requirejs.config({
 		paths: {
-			"knockout-dynamic-components": "/path/to/knockout-dynamic-components",
+			"ko-dynamic-components": "/path/to/ko-dynamic-components",
             "kdc-loader": "/path/to/kdc-loader"
 		},
         map: {
         	"*": {
-            	"knockout-dynamic-components": "kdc-loader!"
+            	"ko-dynamic-components": "kdc-loader!"
             }
         }
 	});
 ```
 
-This will map all requests in your application for knockout-dynamic-components to the loader version of the module, which will support requirejs config options.  The only reason you wouldn't want to use this version is if you aren't going to take advantage of those configuration options and don't feel comfortable with more complicated requirejs configuration.
+This will map all requests in your application for ko-dynamic-components to the loader version of the module, which will support requirejs config options.  The only reason you wouldn't want to use this version is if you aren't going to take advantage of those configuration options and don't feel comfortable with more complicated requirejs configuration.
 
 **require.js options**
 ```js
-	// Assuming module loaded as "knockout-dynamic-components"
+	// Assuming module loaded as "ko-dynamic-components"
 	requirejs.config({
     	config: {
-        	"knockout-dynamic-components": {
+        	"ko-dynamic-components": {
             	useGlobals: true // Will load module with browser globals for external libraries (knockout & jQuery).  Useful if you've already defined/configured those libraries
             }
         }
     });
 ```
 
-**knockout-dynamic-components options**
+**ko-dynamic-components options**
 ```js
 	// Assuming we required module with variable name dynamicComponents
 	dynamicComponents.config({
