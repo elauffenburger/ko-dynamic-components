@@ -1,17 +1,17 @@
 var require = {
+	baseUrl: "",
 	paths: {
 		"knockout": "libs/knockout",
 		"jquery": "libs/jquery",
-		"knockout-dynamic-components": "../dist/knockout-dynamic-components",
-		"kdc-loader": "../dist/kdc-loader"
+		"ko-dynamic-components": "../dist/ko-dynamic-components"
 	},
 	map: {
 		"*": {
-			"knockout-dynamic-components": "kdc-loader!"	
+			"ko-dynamic-components": "ko-dynamic-components!"	
 		}	
 	},
 	config: {
-		"knockout-dynamic-components": {
+		"ko-dynamic-components": {
 			useGlobals: true
 		}	
 	}

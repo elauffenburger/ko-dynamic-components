@@ -14,7 +14,12 @@ require.config({
 	paths: {
     	knockout: "/path/to/your/knockout",
         jquery: "/path/to/your/jquery"
-    }
+    },
+	map: {
+		"*": {
+			"ko-dynamic-components": "ko-dynamic-components!"
+		}
+	}
 });
 ```
 
@@ -27,6 +32,9 @@ This will ensure that when you request "knockout", it grabs the module from that
             $: "path/to/your/jquery"
         },
         map: {
+			"*": {
+				"ko-dynamic-components": "ko-dynamic-components!"
+			},
 			"ko-dynamic-components" : {
             	"knockout": "ko",
                 "jquery": "$"
@@ -144,23 +152,6 @@ To see the full source, check out "example" in the root folder and read the sect
 ## Configuration Options
 
 dynamic-components has a few configuration options (most of which are explored above), but some exist *outside* of the normal dynamicComponents.config(...) method -- these are set via require.config(...).
-
-### *In order to use require config options you must use the "plugin" version of dynamic-components*
-
-This is only necessary if you want configuration options.  **You must include the exclamation point in the pathname**.
-```js
-	requirejs.config({
-		paths: {
-			"ko-dynamic-components": "/path/to/ko-dynamic-components",
-            "kdc-loader": "/path/to/kdc-loader"
-		},
-        map: {
-        	"*": {
-            	"ko-dynamic-components": "kdc-loader!"
-            }
-        }
-	});
-```
 
 This will map all requests in your application for ko-dynamic-components to the loader version of the module, which will support requirejs config options.  The only reason you wouldn't want to use this version is if you aren't going to take advantage of those configuration options and don't feel comfortable with more complicated requirejs configuration.
 

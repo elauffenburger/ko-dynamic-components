@@ -2,7 +2,7 @@ define(
 	[
 		"knockout",
 		"jquery",
-		"knockout-dynamic-components"
+		"ko-dynamic-components"
 	],
 	function (ko, $, dynamicComponents) {
 		// Register a couple components
