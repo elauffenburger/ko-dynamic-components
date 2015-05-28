@@ -140,3 +140,39 @@ This mapping is all it takes to render that component we defined.  Here's what w
 Note that we didn't replace the outer tag; instead, we just inserted the component *into* it.
 
 To see the full source, check out "example" in the root folder and read the section [Real-World Example](https://github.com/elauffenburger/ko-dynamic-components#real-world-example)
+
+## Configuration Options
+
+dynamic-components has a few configuration options (most of which are explored above), but some exist *outside* of the normal dynamicComponents.config(...) method -- these are set via require.config(...).
+
+**require.js options**
+```js
+	// Assuming module loaded as "knockout-dynamic-components"
+	requirejs.config({
+    	config: {
+        	"knockout-dynamic-components": {
+            	useGlobals: true // Will load module with browser globals for external libraries (knockout & jQuery).  Useful if you've already defined/configured those libraries
+            }
+        }
+    });
+```
+
+**knockout-dynamic-components options**
+```js
+	// Assuming we required module with variable name dynamicComponents
+	dynamicComponents.config({
+    	// Prefix for tags of components to load (think of it as enforcing a namespace
+    	elementPrefix: "our-component-prefix-",
+        // Used to mark a DOM node as being bound to a ViewModel by knockout; 
+        // probably the one thing you won't need to configure
+        initKey: "__our_key_", 
+        // Enables debug mode
+        debug: true, 
+        // Name of function that can be called to get id of component type 
+        // so we can map it (1: custom-textbox, 2: custom-textarea, etc.)
+        getIdFunction: 'getId', 
+        // Name of bindingHandler used to load a component 
+        // (e.g. <div data-bind="dynamicComponent: $root.component"></div>)
+        handlerName: "dynamicComponent" 
+    });
+```

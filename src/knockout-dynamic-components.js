@@ -1,7 +1,18 @@
-define([
-	"knockout",
-	"jquery"
-], function (ko, $) {
+// Check if define(...) is defined
+if (typeof (define) === "function") {
+    // Use AMD
+    define(["module"], function (module) {
+        // If the user requested browser globals for some reason...
+        if (module.config().useGlobals) {
+            return factory(ko, $);
+        } else {
+            // Otherwise load normally
+            return require(["knockout, jquery"], factory);
+        }
+    });
+}
+
+function factory(ko, $) {
     var renderFunctions = {},
         configuration = {
             elementPrefix: "",
@@ -14,7 +25,7 @@ define([
             error: function () {
                 console.error.apply(console, arguments);
             }
-        };
+        }
 
     var exports = {
         render: render,
@@ -140,4 +151,4 @@ define([
 
         return '<' + element + ' params="' + processed_params + '"></' + element + '>';
     }
-});
+}
