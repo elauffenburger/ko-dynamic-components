@@ -29,7 +29,21 @@ define({
 					error: function () {
 						console.error.apply(console, arguments);
 					}
-				}
+				},
+				exceptions = {
+					NoComponentRegistrationFoundException: function(component) {
+						this.component = component;
+						this.msg = 'No type or id registration found for component: %O';
+						
+						logger.error(this.msg, this.component);
+					},
+					ErrorRegisteringComponentException: function(component) {
+						this.component = component;
+						this.msg = 'Error registering component: %O';
+						
+						logger.error(this.msg, this.component);
+					}
+				};
 
 			var exports = {
 				render: render,
@@ -146,18 +160,26 @@ define({
 			}
 
 			function render(component) {
-				var idFunction = component[configuration.getIdFunction];
-				var typeIdFunction = component[configuration.getTypeIdFunction];
+				var idFunction = component[configuration.getIdFunction],
+				 	typeIdFunction = component[configuration.getTypeIdFunction];
 				
-				if(!idFunction) {
-					if(!typeIdFunction) {
-						logger.error("Couldn't find a component registration for this component: %O", component);	
-					}
+				if(idFunction) {
+					var idRenderFunction = componentRenderFunctions[idFunction()];
 					
-					return componentTypeRenderFunctions[typeIdFunction()](component);
+					if(idRenderFunction) {
+						idRenderFunction(component);	
+					}
 				}
 				
-				return componentRenderFunctions[idFunction()](component);
+				if(typeIdFunction) {
+					var typeRenderFunction = componentTypeRenderFunctions[typeIdFunction()];
+					
+					if(typeRenderFunction) {
+						typeRenderFunction(component);	
+					}
+				}
+				
+				throw new exceptions.NoComponentRegistrationFoundException(component);
 			}
 
 			function renderFromTemplate(name, params, isLiteral) {
