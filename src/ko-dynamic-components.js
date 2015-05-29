@@ -167,7 +167,7 @@ define({
 					var idRenderFunction = componentRenderFunctions[idFunction()];
 					
 					if(idRenderFunction) {
-						idRenderFunction(component);	
+						return idRenderFunction(component);	
 					}
 				}
 				
@@ -175,7 +175,7 @@ define({
 					var typeRenderFunction = componentTypeRenderFunctions[typeIdFunction()];
 					
 					if(typeRenderFunction) {
-						typeRenderFunction(component);	
+						return typeRenderFunction(component);	
 					}
 				}
 				
