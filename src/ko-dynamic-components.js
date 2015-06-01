@@ -106,6 +106,10 @@ define({
 			}
 
 			function config(args) {
+				if(!args) {
+					return configuration;
+				}
+				
 				for (var key in args) {
 					if (configuration.hasOwnProperty(key)) {
 						configuration[key] = args[key];
