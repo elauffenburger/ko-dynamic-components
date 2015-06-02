@@ -2,7 +2,7 @@ define([
 
 ], function () {
 	return function (context) {
-		/** @module ko-util */
+		/** @module kdc-util */
 		
 		var 
 			// Parent ko-dynamic-components context

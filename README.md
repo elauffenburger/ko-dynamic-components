@@ -7,6 +7,7 @@ ko-dynamic-components is an AMD module (and requirejs loader plugin) that allows
 
 ## Build
 
+### Standard Build
 Make sure you've installed node, then run
 
 ```console
@@ -15,6 +16,14 @@ Make sure you've installed node, then run
 ```
 
 This will generate debug and minified versions of ko-dynamic-components under "/dist"
+
+### Documentation
+To generate documentation, run the standard build, then run
+```console
+	gulp documentation
+```
+Documentation will be placed in ./documentation
+Either open index.html with a browser of your choice or start a server by running `http-server` (install with `npm install --global http-server`)
 
 ## Setting up your environment
 
@@ -195,7 +204,13 @@ dynamic-components has a few configuration options (most of which are explored a
         getIdFunction: 'getId', 
         // Name of bindingHandler used to load a component 
         // (e.g. <div data-bind="dynamicComponent: $root.component"></div>)
-        handlerName: "dynamicComponent" 
+        handlerName: "dynamicComponent",
+		// Constants that can be used for shorthand expressions
+		constants: {
+			// Whenever a user uses a shorthand for 'n' (usually 'kdc:n') when
+			// registering a component's params, it will resolve to 'Name'
+			'n': 'Name'	
+		}
     });
 ```
 
@@ -234,3 +249,48 @@ make a binding that looks like this...
 ```
 
 ...you'll probably get unintended behavior.
+
+### Using Constants
+
+Here's an example of how to use a ko-dynamic-components constant:
+
+```js
+	// Assume we've set up our ko components
+	// and viewmodel, etc. 
+	
+	dynamicComponents.config({
+		//... configuration as normal
+		constants: {
+			'n': 'Name',
+			's': 'Status',
+			'cv': 'ComponentValue'	
+		}	
+	}
+	
+	// Here, we'll use all three constants
+	dynamicComponents.registerComponentById({
+		id: 1,
+		name: 'my-textbox',
+		params: {
+			name: 'kdc:n', // Resolves to 'Name'
+			status: 'kdc:s', // Resolves to 'Status'
+			componentValue: 'kdc:cv' // Resolves to 'ComponentValue
+		},
+		literal: false
+	});
+	
+	// Here's just one
+	dynamicComponents.registerComponentByType({
+		id: 13,
+		name: 'my-select',
+		params: {
+			componentValue: 'kdc:cv' // Resolves to 'ComponentValue'
+		},
+		literal: false
+	});
+```
+
+Constants are useful if you'd like to set application-wide configuration for
+ko-dynamic-components, but don't want to store that configuration in a global
+configuration object or someplace where it's not really domain-specific.  You can
+always just use regular variables if that works better, too!

@@ -1,9 +1,7 @@
 define([
 	"kdc-util"
 ], function(Utils) {
-	function factory(ko, $) {
-			/** @module ko-dynamic-components */
-			
+	function factory(ko, $) {			
 			var 
 				// Map of functions used to render components by type id
 				componentTypeRenderFunctions = {},
@@ -68,8 +66,8 @@ define([
 					constantPrefix: 'kdc:',
 					utils: {}
 				};
-
-			/** @exports ko-dynamic-components */
+			
+			/** @module ko-dynamic-components */
 			var exports = {
 				render: null,
 				registerComponentType: registerComponentType,
@@ -102,7 +100,9 @@ define([
 			}
 			
 			/**
+			 * Starts module and begins listening for changes
 			 * 
+			 * @method run
 			 */
 			function run() {
 				if (privates.utils.validateConfiguration()) {
@@ -195,7 +195,7 @@ define([
 			/**
 			 * Registers multiple components by their type ids
 			 * 
-			 * @method registerComponentsType
+			 * @method registerComponentTypes
 			 * @param {Object[]} components Array of objects containing information used to register a render function
 			 */
 			function registerComponentTypes(components) {
