@@ -10,7 +10,7 @@ gulp.task('minify', minify);
 gulp.task('optimize', optimize);
 gulp.task('clean', clean);
 
-gulp.task('default', ["clean", "minify"]);
+gulp.task('default', ["clean", "optimize"]);
 
 function clean(done) {
 	del([
@@ -32,17 +32,19 @@ function minify(done) {
 }
 
 function optimize(done) {
-	gulp.src("./src/*.js")
+	gulp.src("./src/ko-dynamic-components.js")
 		.pipe(requirejsOptimize(
 			{
 				paths: {
 					"jquery": "../bower_components/jquery/dist/jquery.min",
 					"knockout": "../bower_components/knockout/dist/knockout",
-					"kdc-base": "./kdc-base",
-					"kdc-loader": "./kdc-loader",
-					"knockout-dynamic-components": "./knockout-dynamic-components"
 				},
-				optimize: "none"
+				optimize: "none",
+				include: [
+					"kdc-base",
+					"kdc-util",
+					"ko-dynamic-components"
+				]
 			}
 		))
 		.pipe(gulp.dest('./dist'))

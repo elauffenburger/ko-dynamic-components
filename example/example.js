@@ -20,7 +20,7 @@ define(
 				function logSelf() {
 					console.log("Hi! I'm: %O", self);
 					console.log("Here's my value raw: %O", self.name());
-					console.log("Here's my value unwrapped: %s", dynamicComponents.unwrapObservable(self.name));
+					console.log("Here's my value unwrapped: %s", dynamicComponents.utils().unwrapObservable(self.name));
 				}
 			},
 			template: '<h1>Value:</h1><input type="text" data-bind="value: name(), valueUpdate: \'keyup\'"><div class="button" data-bind="event: { click: logSelf }">Log me in console!</div>'
@@ -40,7 +40,7 @@ define(
 				function logSelf() {
 					console.log("Hi! I'm: %O", self);
 					console.log("Here's my value raw: %O", self.status());
-					console.log("Here's my value unwrapped: %s", dynamicComponents.unwrapObservable(self.status));
+					console.log("Here's my value unwrapped: %s", dynamicComponents.utils().unwrapObservable(self.status));
 				}
 			},
 			template: '<h1>Status:</h1><input type="text" data-bind="value: status(), valueUpdate: \'keyup\'"><div class="button" data-bind="event: { click: logSelf }">Log me in console!</div>'
@@ -60,7 +60,7 @@ define(
 				function logSelf() {
 					console.log("Hi! I'm: %O", self);
 					console.log("Here's my value raw: %O", self.message());
-					console.log("Here's my value unwrapped: %s", dynamicComponents.unwrapObservable(self.message));
+					console.log("Here's my value unwrapped: %s", dynamicComponents.utils().unwrapObservable(self.message));
 				}
 			},
 			template: '<h1>Overriden Generic Type:</h1><input type="text" data-bind="value: message(), valueUpdate: \'keyup\'"><div class="button" data-bind="event: { click: logSelf }">Log me in console!</div>'
@@ -92,7 +92,11 @@ define(
 			debug: true,
 			elementPrefix: "custom_component_",
 			getTypeIdFunction: "ComponentTypeId",
-			getIdFunction: "ComponentId"
+			getIdFunction: "ComponentId",
+			constants: {
+				'n': 'Name',
+				's': 'Status'
+			}
 		});
 
 		// Register component settings
@@ -101,7 +105,7 @@ define(
 				id: 1,
 				name: "textbox",
 				params: {
-					name: 'Name'
+					name: 'kdc:n'
 				},
 				literal: false
 			},
@@ -109,7 +113,7 @@ define(
 				id: 2,
 				name: "textbox2",
 				params: {
-					status: 'Status'
+					status: 'kdc:s'
 				},
 				literal: false
 			}
