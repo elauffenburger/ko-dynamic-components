@@ -12,6 +12,7 @@ Make sure you've installed node, then run
 
 ```console
 	npm install
+	bower install
 	gulp
 ```
 
