@@ -1,1 +1,4 @@
-git pull; gulp;
+git pull; 
+npm install;
+bower install;
+gulp;

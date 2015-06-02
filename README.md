@@ -74,7 +74,7 @@ You may need to shim jQuery if you're using a version older than 1.11.
 If you'd like to see a real example, take a look at the "example" folder.  It contains a simple app that can show you the finer points of how an application can take use of this module.  To spin up a simple server, navigate to the root of the repo (not the root of example), and run the following:
 
 ```shell
-	npm install -g http-server
+	npm install --global http-server
     http-server
 ```
 
