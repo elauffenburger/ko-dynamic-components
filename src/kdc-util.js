@@ -22,6 +22,7 @@ define([
 		self.registerKnockoutHandlers = registerKnockoutHandlers;
 		self.$get = $get;
 		self.render = render;
+		self.getObservableOrValue = getObservableOrValue;
 		
 		//////////
 		
@@ -35,6 +36,18 @@ define([
 			return self;	
 		}
 		
+	    /**
+         * Given an object, returns a new ko observable if the object is not already an observable,
+         * or the object if it is an observable.
+         *
+         * @method getObservableOrValue
+         * @arg {Object} value Either an observable or a value
+         * @return {Object} An observable from the value or the value if it was already an observable
+         */
+		function getObservableOrValue(value) {
+		    return ko.isObservable(value) ? value : ko.observable(value || '');
+		}
+
 		/**
 		 * Validates configuration
 		 * 
