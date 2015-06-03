@@ -123,7 +123,9 @@ define([
 				}
 			}
 			
-			throw new parentContext.exceptions.NoComponentRegistrationFoundException(component);
+			if (!parentContext.configuration.failSilent) {
+			    throw new parentContext.exceptions.NoComponentRegistrationFoundException(component);
+			}
 		}
 		
 		/**

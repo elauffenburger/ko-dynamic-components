@@ -10,9 +10,6 @@ define([
 				// Map of configuration options
 				configuration = {
 					// Prefix for rendered element names
-					// ex. If this is "custom-" and the component to be rendered
-					// has a name "dropdown", the full element tag 
-					// will be "<custom-dropdown>...</custom-dropdown>"
 					elementPrefix: "",
 					// Key used to store component initialization state
 					// See "kdc-util~registerKnockoutHandlers for more info
@@ -26,13 +23,10 @@ define([
 					// Name of ko bindingHandler to register
 					handlerName: "dynamicComponent",
 					// Registered constants that can be used to shorthand
-					// configuration options by starting a property name
-					// with privates.constantPrefix
-					// ex. If privates.constantPrefix is "kdc:",
-					// and we've entered a constant of 'n' => 'Name',
-					// then registering a component with name => 'kdc:n'
-					// will resolve to 'Name'
-					constants: {}
+					// configuration options
+					constants: {},
+                    // If we should let a failure to lookup a component fail
+                    failSilent: true
 				},
 				// Logger that can be turned on/off
 				logger = {
