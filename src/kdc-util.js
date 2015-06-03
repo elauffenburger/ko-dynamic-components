@@ -169,7 +169,12 @@ define([
          * @return {String} String constant with that key
          */
 		function getConstant(key) {
-		    return parentContext.configuration.constants[key] || '';
+		    if (!constantsRegistered) {
+		        return '';
+		    }
+
+		    var constantWithKey = parentContext.configuration.constants[key] || '';
+		    return convertFromPossibleConstant(constantWithKey);
 		}
 
 		/**
