@@ -23,6 +23,7 @@ define([
 		self.$get = $get;
 		self.render = render;
 		self.getObservableOrValue = getObservableOrValue;
+		self.getConstant = getConstant;
 		
 		//////////
 		
@@ -158,6 +159,17 @@ define([
 		 */
 		function constantsRegistered() {
 			return Object.keys(parentContext.configuration.constants);
+		}
+
+	    /**
+         * Gets a previously registered constant
+         *
+         * @method getConstant
+         * @arg {String} key Key to lookup
+         * @return {String} String constant with that key
+         */
+		function getConstant(key) {
+		    return parentContext.configuration.constants[key] || '';
 		}
 
 		/**
